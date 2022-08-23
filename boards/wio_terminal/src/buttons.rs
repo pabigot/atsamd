@@ -1,7 +1,7 @@
 use atsamd_hal::clock::GenericClockController;
 use atsamd_hal::eic;
 use atsamd_hal::eic::pin::{
-    ExtInt10, ExtInt11, ExtInt12, ExtInt3, ExtInt4, ExtInt5, ExtInt7, Sense,
+    ExtInt10, ExtInt11, ExtInt12, ExtInt3, ExtInt4, ExtInt5, ExtInt7, ExternalInterruptID, Sense,
 };
 use atsamd_hal::pac::{interrupt, EIC, MCLK};
 
@@ -41,8 +41,15 @@ impl ButtonPins {
         let eic_clock = clocks.eic(&gclk1).unwrap();
         let mut eic = eic::init_with_ulp32k(mclk, eic_clock, eic);
 
-        /*
         eic.button_debounce_pins(&[
+            11 as ExternalInterruptID,
+            12 as ExternalInterruptID,
+            3 as ExternalInterruptID,
+            4 as ExternalInterruptID,
+            5 as ExternalInterruptID,
+            10 as ExternalInterruptID,
+            7 as ExternalInterruptID,
+            /*
             self.button1.id(),
             self.button2.id(),
             self.button3.id(),
@@ -51,8 +58,8 @@ impl ButtonPins {
             self.switch_z.id(),
             self.switch_u.id(),
             self.switch_b.id(),
+            */
         ]);
-        */
 
         // Unfortunately, the pin assigned to B1 shares the same
         // ExtInt line as up on the joystick. As such, we don't
